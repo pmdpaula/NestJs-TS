@@ -1,5 +1,12 @@
-# Aula Youtube
-https://youtu.be/bAH4nBb1NFc
+# Aula Youtube Backend com JestJs
+[Playlist Backend com Nest JS](https://www.youtube.com/playlist?list=PLzFYWfRVHp5Lc49RLdfyMJ_a42c2C2MnR)
+
+[Aula 01 - NestJS, o melhor framework backend de NodeJS](https://youtu.be/bAH4nBb1NFc)  
+[Aula 02 - NestJS e Prisma, a combinação PERFEITA pra banco de dados em NodeJS](https://youtu.be/8IwUvk6hZaI)  
+[Aula 03 - NestJS - Autenticação (Sistema de Login)](https://youtu.be/3z6Cs_PtYc0)  
+[Aula 04 - NestJS - Documentação automática com Swagger](https://youtu.be/fshX_252HbU)  
+[Aula 05 - NestJS - Fazendo deploy no Heroku](https://youtu.be/ZRNFhpwzN64)
+
 
 
 ## Description
