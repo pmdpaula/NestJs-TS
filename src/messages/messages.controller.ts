@@ -3,12 +3,13 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Post,
   Put,
 } from '@nestjs/common';
 import { MessagesService } from './messages.service';
-import { Message } from './message.d';
+import { MessageDto } from './messageDto';
 
 @Controller('messages')
 export class MessagesController {
@@ -19,22 +20,37 @@ export class MessagesController {
   }
 
   @Get(':id')
-  findById(@Param() params) {
-    return this.messagesService.findById(Number(params.id));
+  async findById(@Param() params) {
+    try {
+      return await this.messagesService.findById(Number(params.id));
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
   }
 
   @Post()
-  create(@Body() message: Message) {
-    return this.messagesService.create(message);
+  create(@Body() messageDto: MessageDto) {
+    return this.messagesService.create(messageDto);
   }
 
   @Put(':id')
-  update(@Param() params, @Body() message: Message) {
-    return this.messagesService.update(Number(params.id), message);
+  async update(@Param() params, @Body() messageDto: MessageDto) {
+    try {
+      return await this.messagesService.update({
+        id: Number(params.id),
+        messageDto,
+      });
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
   }
 
   @Delete(':id')
-  delete(@Param() params) {
-    return this.messagesService.delete(Number(params.id));
+  async delete(@Param() params) {
+    try {
+      return await this.messagesService.delete(Number(params.id));
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
   }
 }
