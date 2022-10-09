@@ -1,4 +1,4 @@
-# Aula Youtube Backend com JestJs
+# Aula Youtube Backend com NestJs
 [Playlist Backend com Nest JS](https://www.youtube.com/playlist?list=PLzFYWfRVHp5Lc49RLdfyMJ_a42c2C2MnR)
 
 [Aula 01 - NestJS, o melhor framework backend de NodeJS](https://youtu.be/bAH4nBb1NFc)  
