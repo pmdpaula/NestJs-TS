@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  name       String       @unique
+  RecipeItem RecipeItem[]
+
+  @@map("category")
+}
+
+model RecipeItem {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  value      Float
+  boughtDate DateTime
+  Category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?   @db.ObjectId
+  stock      Boolean
+
+  @@unique([name, boughtDate])
+  @@map("recipeItem")
+}
