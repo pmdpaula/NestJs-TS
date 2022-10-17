@@ -92,7 +92,6 @@ export class CategoryService {
   }
 
   async update(id: string, data: CategoryDTO) {
-    console.log(data);
     return this.prisma.category
       .update({
         where: { id },

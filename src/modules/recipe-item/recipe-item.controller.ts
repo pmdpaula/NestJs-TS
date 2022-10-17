@@ -7,7 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { RecipeItem } from '@prisma/client';
+// import { RecipeItem } from '@prisma/client';
 import { RecipeItemDTO } from './dto/recipe-item.dto';
 import { RecipeItemService } from './recipe-item.service';
 
@@ -16,7 +16,7 @@ export class RecipeItemController {
   constructor(private readonly recipeItemService: RecipeItemService) {}
 
   @Post()
-  create(@Body() data: RecipeItem) {
+  create(@Body() data: RecipeItemDTO) {
     return this.recipeItemService.create(data);
   }
 
@@ -25,25 +25,15 @@ export class RecipeItemController {
     return this.recipeItemService.findAll();
   }
 
-  @Get('/inStock')
-  findAllInStock() {
-    return this.recipeItemService.findAllInStock();
-  }
-
   @Get(':id')
   findOneById(@Param('id') id: string) {
     return this.recipeItemService.findOneById(id);
   }
 
-  @Get('/search/:name')
-  findManyByName(@Param('name') name: string) {
-    return this.recipeItemService.findManyByName(name);
-  }
-
-  @Get('/category/:categoryId')
-  findManyByCategoryId(@Param('categoryId') categoryId: string) {
-    return this.recipeItemService.findManyByCategoryId(categoryId);
-  }
+  // @Get('/search/:name')
+  // findManyByName(@Param('name') name: string) {
+  //   return this.recipeItemService.findManyByName(name);
+  // }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() data: RecipeItemDTO) {

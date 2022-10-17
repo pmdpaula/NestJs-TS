@@ -3,16 +3,25 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaService } from '../../database/prisma.service';
 import { RecipeItemDTO } from './dto/recipe-item.dto';
 
-const selectAllFieldsWithCategoryName = {
-  id: true,
-  name: true,
-  value: true,
-  boughtDate: true,
-  stock: true,
-  Category: {
+const selectAllFieldsWithItemNameAndCategory = {
+  Item: {
     select: {
-      id: true,
       name: true,
+      stock: true,
+      unity: true,
+      value: true,
+      Category: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  },
+  Recipe: {
+    select: {
+      name: true,
+      description: true,
     },
   },
 };
@@ -36,44 +45,11 @@ export class RecipeItemService {
         }
         throw error;
       });
-
-    // const recipeItemExists = await this.prisma.recipeItem.findFirst({
-    //   where: {
-    //     name: data.name,
-    //   },
-    // });
-
-    // if (recipeItemExists) {
-    //   throw new Error('RecipeItem already exists');
-    // }
-
-    // const recipeItem = await this.prisma.recipeItem.create({
-    //   data,
-    // });
-
-    // return recipeItem;
   }
 
   async findAll() {
     return this.prisma.recipeItem.findMany({
-      select: selectAllFieldsWithCategoryName,
-    });
-  }
-
-  async findAllInStock() {
-    return this.prisma.recipeItem.findMany({
-      where: {
-        stock: true,
-      },
-      select: selectAllFieldsWithCategoryName,
-      orderBy: [
-        {
-          Category: {
-            name: 'desc',
-          },
-        },
-        { boughtDate: 'desc' },
-      ],
+      include: selectAllFieldsWithItemNameAndCategory,
     });
   }
 
@@ -97,6 +73,7 @@ export class RecipeItemService {
       where: {
         id,
       },
+      include: selectAllFieldsWithItemNameAndCategory,
     });
 
     if (!recipeItemExists) {
@@ -106,50 +83,24 @@ export class RecipeItemService {
     return recipeItemExists;
   }
 
-  async findManyByName(name: string) {
-    return await this.prisma.recipeItem
-      .findMany({
-        where: {
-          name: {
-            contains: name,
-          },
-        },
-      })
-      .catch((error) => {
-        if (error instanceof PrismaClientKnownRequestError) {
-          if (error.code === 'P2001') {
-            throw new ForbiddenException('RecipeItem does not exist');
-          }
-        }
-        throw error;
-      });
-  }
-
-  async findManyByCategoryId(categoryId: string) {
-    return await this.prisma.recipeItem
-      .findMany({
-        where: {
-          categoryId,
-        },
-        select: selectAllFieldsWithCategoryName,
-        orderBy: [
-          {
-            Category: {
-              name: 'desc',
-            },
-          },
-          { boughtDate: 'desc' },
-        ],
-      })
-      .catch((error) => {
-        if (error instanceof PrismaClientKnownRequestError) {
-          if (error.code === 'P2001') {
-            throw new ForbiddenException('RecipeItem does not exist');
-          }
-        }
-        throw error;
-      });
-  }
+  // async findManyByName(name: string) {
+  //   return await this.prisma.recipeItem
+  //     .findMany({
+  //       where: {
+  //         name: {
+  //           contains: name,
+  //         },
+  //       },
+  //     })
+  //     .catch((error) => {
+  //       if (error instanceof PrismaClientKnownRequestError) {
+  //         if (error.code === 'P2001') {
+  //           throw new ForbiddenException('RecipeItem does not exist');
+  //         }
+  //       }
+  //       throw error;
+  //     });
+  // }
 
   async update(id: string, data: RecipeItemDTO) {
     return this.prisma.recipeItem

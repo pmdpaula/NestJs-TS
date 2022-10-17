@@ -12,22 +12,117 @@ datasource db {
 }
 
 model Category {
-  id         String       @id @default(auto()) @map("_id") @db.ObjectId
-  name       String       @unique
-  RecipeItem RecipeItem[]
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String @unique
+  Item Item[]
 
   @@map("category")
 }
 
-model RecipeItem {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+model Item {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
   name       String
   value      Float
+  quantity   Float
+  unity      String
   boughtDate DateTime
-  Category   Category? @relation(fields: [categoryId], references: [id])
-  categoryId String?   @db.ObjectId
   stock      Boolean
+  Category   Category?    @relation(fields: [categoryId], references: [id])
+  categoryId String?      @db.ObjectId
+  RecipeItem RecipeItem[]
 
   @@unique([name, boughtDate])
+  @@map("item")
+}
+
+model RecipeItem {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  quantity    Float
+  value       Float?
+  observation String?
+  Item        Item     @relation(fields: [itemId], references: [id])
+  itemId      String   @db.ObjectId
+  Recipe      Recipe[] @relation(fields: [recipeId], references: [id])
+  recipeId    String[] @db.ObjectId
+
   @@map("recipeItem")
+}
+
+model Recipe {
+  id                   String       @id @default(auto()) @map("_id") @db.ObjectId
+  name                 String
+  description          String?
+  creationDate         DateTime
+  lastModificationDate DateTime?
+  RecipeItems          RecipeItem[] @relation(fields: [recipeItemId], references: [id])
+  recipeItemId         String[]     @db.ObjectId
+  Project              Project[]
+
+  @@unique([name, creationDate])
+  @@map("recipe")
+}
+
+model Client {
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  firstName        String
+  surname          String?
+  cellphone1       String?
+  cellphone2       String?
+  description      String?
+  address          String?
+  city             String?
+  country          String?
+  eventPlanner     Boolean
+  RelationalClient Client?   @relation("ResponsiblePerson", fields: [clientId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Client           Client[]  @relation("ResponsiblePerson")
+  clientId         String?   @db.ObjectId
+  Project          Project[] @relation(name: "ClientId")
+  ProjectPlanner   Project[] @relation(name: "EventPlanner")
+  // Project          Project[]
+
+  @@map("client")
+}
+
+model EventType {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String    @unique
+  description String?
+  Project     Project[]
+
+  @@map("eventType")
+}
+
+model Project {
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  deliveryData     DateTime
+  deliveryMode     String
+  description      String?
+  extraDescription String?
+  extraValue       Float?
+  isActive         Boolean
+  soldValue        Float
+  EventType        EventType @relation(fields: [eventTypeId], references: [id])
+  eventTypeId      String    @db.ObjectId
+  Recipe           Recipe?   @relation(fields: [recipeId], references: [id])
+  recipeId         String?   @db.ObjectId
+  Client           Client?   @relation(name: "ClientId", fields: [clientId], references: [id])
+  clientId         String?   @db.ObjectId
+  EventPlanner     Client?   @relation(name: "EventPlanner", fields: [plannerId], references: [id])
+  plannerId        String?   @db.ObjectId
+  Payment          Payment[]
+
+  @@unique([name, deliveryData])
+  @@map("project")
+}
+
+model Payment {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  value       Float
+  description String?
+  paymentDate DateTime
+  Project     Project  @relation(fields: [projectId], references: [id])
+  projectId   String   @db.ObjectId
+
+  @@map("payment")
 }
