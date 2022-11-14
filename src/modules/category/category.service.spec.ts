@@ -30,7 +30,7 @@ export const categoryTests = () => {
       });
 
       // Teste de erro criação de categoria duplicada
-      it('shoud thorw on duplicate category name', async () => {
+      it('should thorw on duplicate category name', async () => {
         await categoryService
           .create(categoriesData[0])
           .then((category) => expect(category).toBeUndefined())
