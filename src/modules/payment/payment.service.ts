@@ -6,10 +6,10 @@ import { PaymentDTO } from './dto/payment.dto';
 // import { UpdatePaymentDto } from './dto/update-payment.dto';
 
 const selectAllInfo = {
-  Project: {
+  project: {
     select: {
       name: true,
-      Client: {
+      client: {
         select: {
           firstName: true,
           surname: true,

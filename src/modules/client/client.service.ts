@@ -80,7 +80,7 @@ export class ClientService {
         id,
       },
       include: {
-        Client: {
+        client: {
           select: {
             firstName: true,
             surname: true,

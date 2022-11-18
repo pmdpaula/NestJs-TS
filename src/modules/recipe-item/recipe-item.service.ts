@@ -4,13 +4,13 @@ import { PrismaService } from '../../database/prisma.service';
 import { RecipeItemDTO } from './dto/recipe-item.dto';
 
 const selectAllFieldsWithItemNameAndCategory = {
-  Item: {
+  item: {
     select: {
       name: true,
       stock: true,
       unity: true,
       value: true,
-      Category: {
+      category: {
         select: {
           id: true,
           name: true,
@@ -18,7 +18,7 @@ const selectAllFieldsWithItemNameAndCategory = {
       },
     },
   },
-  Recipe: {
+  recipe: {
     select: {
       name: true,
       description: true,

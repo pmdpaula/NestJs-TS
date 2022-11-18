@@ -434,6 +434,39 @@ const main = async () => {
       },
     ],
   });
+
+  // populate Roles
+  await prisma.role.createMany({
+    data: [
+      {
+        id: '111111111111111112222aaa',
+        name: 'ADMIN',
+      },
+      {
+        id: '111111111111111112222bbb',
+        name: 'USER',
+      },
+      {
+        id: '111111111111111112222ccc',
+        name: 'LEADER',
+      },
+    ],
+  });
+
+  // populate Users
+  await prisma.user.createMany({
+    data: [
+      {
+        id: '111111111111111119999aaa',
+        // username: 'admin',
+        password: 'admin',
+        email: 'admin@localhost',
+        firstName: 'Admin',
+        surname: 'Admin',
+        // role: ['111111111111111112222aaa'],
+      },
+    ],
+  });
 };
 
 main();

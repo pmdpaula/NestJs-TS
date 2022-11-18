@@ -9,6 +9,11 @@ import { ClientModule } from './modules/client/client.module';
 import { EventTypeModule } from './modules/event-type/event-type.module';
 import { ProjectModule } from './modules/project/project.module';
 import { PaymentModule } from './modules/payment/payment.module';
+import { UserModule } from './modules/user/user.module';
+import { RoleModule } from './modules/role/role.module';
+import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -20,8 +25,17 @@ import { PaymentModule } from './modules/payment/payment.module';
     EventTypeModule,
     ProjectModule,
     PaymentModule,
+    UserModule,
+    RoleModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}

@@ -11,7 +11,7 @@ const selectAllFieldsWithCategoryName = {
   value: true,
   boughtDate: true,
   stock: true,
-  Category: {
+  category: {
     select: {
       id: true,
       name: true,
@@ -67,7 +67,7 @@ export class ItemService {
       select: selectAllFieldsWithCategoryName,
       orderBy: [
         {
-          Category: {
+          category: {
             name: 'desc',
           },
         },
@@ -97,7 +97,7 @@ export class ItemService {
         id,
       },
       include: {
-        Category: {
+        category: {
           select: {
             name: true,
           },
@@ -138,7 +138,7 @@ export class ItemService {
         select: selectAllFieldsWithCategoryName,
         orderBy: [
           {
-            Category: {
+            category: {
               name: 'desc',
             },
           },

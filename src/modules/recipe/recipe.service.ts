@@ -6,9 +6,9 @@ import { RecipeDTO } from './dto/recipe.dto';
 // import { UpdateRecipeDto } from './dto/update-recipe.dto';
 
 const selectAllInfo = {
-  RecipeItems: {
+  recipeItems: {
     select: {
-      Item: {
+      item: {
         select: {
           // id: true,
           name: true,
@@ -16,7 +16,7 @@ const selectAllInfo = {
           // quantity: true,
           unity: true,
           value: true,
-          Category: {
+          category: {
             select: {
               name: true,
             },

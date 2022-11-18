@@ -6,12 +6,12 @@ import { ProjectDTO } from './dto/project.dto';
 // import { UpdateProjectDto } from './dto/update-project.dto';
 
 const selectAllInfo = {
-  EventType: {
+  eventType: {
     select: {
       name: true,
     },
   },
-  Client: {
+  client: {
     select: {
       firstName: true,
       surname: true,
@@ -22,7 +22,7 @@ const selectAllInfo = {
       country: true,
       description: true,
       eventPlanner: true,
-      RelationalClient: {
+      relationalClient: {
         select: {
           firstName: true,
           surname: true,
@@ -32,7 +32,7 @@ const selectAllInfo = {
       },
     },
   },
-  EventPlanner: {
+  eventPlanner: {
     select: {
       firstName: true,
       surname: true,
@@ -40,7 +40,7 @@ const selectAllInfo = {
       cellphone2: true,
     },
   },
-  Recipe: {
+  recipe: {
     select: {
       name: true,
       description: true,
